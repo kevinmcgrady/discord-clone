@@ -8,4 +8,5 @@ Tech
 - PlanetScale (Database)
 - Clerk (Auth)
 - React Hook Form
-- Zod
+- Zod (Validation)
+- Uploadthing (Image upload)

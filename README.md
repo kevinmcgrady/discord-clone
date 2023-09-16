@@ -7,3 +7,5 @@ Tech
 - Prisma (ORM)
 - PlanetScale (Database)
 - Clerk (Auth)
+- React Hook Form
+- Zod

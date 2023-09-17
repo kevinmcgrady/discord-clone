@@ -8,6 +8,7 @@ type Params = {
     serverId: string;
   };
 };
+
 export async function PATCH(req: Request, { params }: Params) {
   try {
     const profile = await currentProfile();
@@ -25,6 +26,27 @@ export async function PATCH(req: Request, { params }: Params) {
       data: {
         name,
         imageUrl,
+      },
+    });
+
+    return NextResponse.json(server);
+  } catch (error) {
+    return new NextResponse('Internal Error', { status: 500 });
+  }
+}
+
+export async function DELETE(req: Request, { params }: Params) {
+  try {
+    const profile = await currentProfile();
+
+    if (!profile) {
+      return new NextResponse('Unauthorized', { status: 401 });
+    }
+
+    const server = await db.server.delete({
+      where: {
+        id: params.serverId,
+        profileId: profile.id,
       },
     });
 

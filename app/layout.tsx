@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import { Open_Sans } from 'next/font/google';
 
 import { ModalProvider } from '@/components/providers/modal-provider';
+import { QueryProvider } from '@/components/providers/query-provider';
 import { SocketProvider } from '@/components/providers/socket-provider';
 import { ThemeProvider } from '@/components/providers/theme-provider';
 import { cn } from '@/lib/utils';
@@ -32,8 +33,10 @@ export default function RootLayout({
             storageKey='discord-theme'
           >
             <SocketProvider>
-              <ModalProvider />
-              {children}
+              <QueryProvider>
+                <ModalProvider />
+                {children}
+              </QueryProvider>
             </SocketProvider>
           </ThemeProvider>
         </body>

@@ -5,6 +5,7 @@ import { Member, MemberRole, Profile } from '@prisma/client';
 import axios from 'axios';
 import { Edit, FileIcon, ShieldAlert, ShieldCheck, Trash } from 'lucide-react';
 import Image from 'next/image';
+import { useParams,useRouter } from 'next/navigation';
 import qs from 'query-string';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -58,6 +59,8 @@ export const ChatItem = ({
   timeStamp,
 }: ChatItemProps) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const router = useRouter();
+  const params = useParams();
   const { onOpen } = useModal();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -82,6 +85,13 @@ export const ChatItem = ({
 
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
+
+  const handleOnMemberClick = () => {
+    if (member.id === currentMember.id) {
+      return;
+    }
+    router.push(`/servers/${params?.serverId}/conversations/${member.id}`);
+  };
 
   const fileType = fileUrl?.split('.').pop();
 
@@ -114,13 +124,19 @@ export const ChatItem = ({
   return (
     <div className='relative group flex items-center hover:bg-black/5 p-4 transition w-full'>
       <div className='group flex gap-x-2 items-start w-full'>
-        <div className='cursor-pointer hover:drop-shadow-md transition'>
+        <div
+          onClick={handleOnMemberClick}
+          className='cursor-pointer hover:drop-shadow-md transition'
+        >
           <UserAvatar src={member.profile.imageUrl} />
         </div>
         <div className='flex flex-col w-full'>
           <div className='flex items-center gap-x-2'>
             <div className='flex items-center'>
-              <p className='font-semibold text-sm hover:underline cursor-pointer'>
+              <p
+                onClick={handleOnMemberClick}
+                className='font-semibold text-sm hover:underline cursor-pointer'
+              >
                 {member.profile.name}
               </p>
               <ActionTooltip label={member.role}>

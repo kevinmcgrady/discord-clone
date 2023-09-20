@@ -10,3 +10,8 @@ Tech
 - React Hook Form
 - Zod (Validation)
 - Uploadthing (Image upload)
+- Tanstack Query
+- Emoji Mart
+- Tailwind
+- Zustand
+- LiveKit (Video calling)
